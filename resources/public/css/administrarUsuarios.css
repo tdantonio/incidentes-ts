@@ -1,0 +1,15 @@
+.nav-link{
+    color: black
+}
+
+.collapse{
+    justify-content: right;
+}
+
+.list-group{
+    margin-top: 25px;
+}
+
+.nombres{
+    justify-content: left;
+}

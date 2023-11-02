@@ -1,0 +1,17 @@
+.card {
+  border: none;
+}
+
+.card-header {
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+  border-color: #e0a800;
+}

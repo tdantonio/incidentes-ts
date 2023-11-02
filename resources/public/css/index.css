@@ -1,0 +1,204 @@
+.body{
+    background-color: #1B4146;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar{
+   background: #062129;
+}
+
+.navbar-expand-lg{
+    background: #062129;
+}
+
+.navbar-collapse{
+    justify-content: right;
+}
+
+.nav-link{
+    margin: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    position: relative;
+    color: #9DDBA9;
+    font-family: "JetBrains Mono";
+}
+
+.nav-link::after{
+    opacity: 0;
+    transition: all 0.2s;
+    height: 2px;
+    width: 100%;
+    background-color: #9DDBA9;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.nav-link:hover::after{
+    content: '';
+    opacity: 1;
+}
+
+.nav-link:hover{
+    color: #9DDBA9;
+}
+
+#navbarDropdown{
+    color: #9DDBA9;
+}
+
+.collapse{
+    justify-content: right;
+}
+
+.navbar-toggler{
+    background-color: #9DDBA9;
+    color: #1B4146;
+}
+
+.navbar-toggler-icon{
+    background-color: #9DDBA9;
+}
+
+.m-0{
+    font-size: 20px;
+    color: #9DDBA9;
+}
+
+.card{
+    border:none;
+}
+
+.card-header{
+    background-color: #062129;
+}
+
+.footer{
+    background: #062129;
+}
+
+.text{
+    color: #9DDBA9;
+}
+
+.botonppal{
+    background-color: #062129;
+    color: #9DDBA9;
+}
+
+.botonppal:hover{
+    background-color: #062129;
+    color: #9DDBA9;
+}
+
+.btn-link{
+    color: #062129;
+}
+
+.botonCS{
+    background-color: #9DDBA9;
+    color: #062129;
+    border-color: #9DDBA9;
+    font-family: "JetBrains Mono";
+}
+
+.botonCS:hover{
+    border-color: #9DDBA9;
+    color: #9DDBA9;
+}
+
+.btn-link:hover{
+    color: #9DDBA9;
+}
+
+.dropdown-menu{
+    background-color: #9DDBA9;
+}
+
+.dropdown-item{
+    color: #062129;
+    font-family: "JetBrains Mono";
+}
+
+.dropdown-item:hover{
+    background-color:transparent;
+    color: #1B4146;
+}
+
+.link:hover{
+    color: #9DDBA9;
+}
+
+.link{
+    color: #062129;
+}
+
+.encab{
+    background-color: #062129;
+    color: #9DDBA9;
+    border: none;
+}
+
+#boton-link-nosotros{
+    color: #9DDBA9;
+}
+
+#boton-link-nosotros:hover{
+    color: #9DDBA9;
+}
+
+.cont{
+    display: flex;
+}
+
+#parrafo-footer{
+    font-family: "JetBrains Mono";
+    color: #9DDBA9;
+}
+
+.lista-pequenia{
+    list-style-type: none;
+    padding: 0;
+    align-items: center;
+    display: grid;
+    place-items: center;
+}
+
+.cont{
+    margin: 0 auto;
+    text-align: center;
+}
+
+.text-ubi{
+    font-family: "JetBrains Mono";
+    color: white;
+    font-style: italic;
+}
+
+.div3{
+    display: flex;
+}
+
+.botonReg{
+    border-color: #9DDBA9;
+    color: #9DDBA9;
+    font-family: "JetBrains Mono";
+}
+
+.botonReg:hover{
+    color:#9DDBA9;
+}
+
+.nombreUsuario{
+    font-family: "JetBrains Mono";
+    margin: 0;
+    top: 50%;
+    transform: translateY(63%);
+}
+
+.titulos{
+    color:white;
+}

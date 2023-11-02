@@ -1,0 +1,55 @@
+{% layout "plantilla_base.liquid" %}
+{% block contenido %}
+<div class="container mt-4">
+    <h1>Incidentes</h1>
+    <a class="btn botonppal mb-auto" href="/incidentes/crear">Abrir Incidente</a>
+    <div class="btn-group">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Filtrar
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" id="filterOpen">Abiertos</a>
+            <a class="dropdown-item" href="#" id="filterClosed">Cerrados</a>
+        </div>
+    </div>
+    <ul class="list-group mt-3" id="incidentList">
+        {% for comunidad in comunidades %}
+            <h2>Incidentes en {{comunidad.nombre}}</h2>
+            <table class="table table-striped mb-5">
+                <thead>
+                <tr>
+                    <th class="col-md-1"><strong>Título</strong></th>
+                    <th class="col-md-3"><strong>Descripción</strong></th>
+                    <th class="col-md-2"><strong>Entidad</strong></th>
+                    <th class="col-md-1"><strong>Establecimiento</strong></th>
+                    <th class="col-md-1"><strong>Servicio</strong></th>
+                    <th class="col-md-2"><strong>Apertura</strong></th>
+                    <th class="col-md-2"><strong>Cierre</strong></th>
+                    <th class="col-md-1"><strong>Estado</strong></th>
+                    <th class="col-md-2"><strong></strong></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for incident in comunidad.incidentes %}
+                    <tr>
+                        <td>{{incident.titulo}}</td>
+                        <td>{{incident.descripcion}}</td>
+                        <td>{{incident.prestacionDeServicio.getEntidad.getNombre}}</td>
+                        <td>{{incident.prestacionDeServicio.getEstablecimiento.getNombre}}</td>
+                        <td>{{incident.prestacionDeServicio.getServicio.getNombre}}</td>
+                        <td>{{incident.aperturaToString}}</td>
+                        <td>{{incident.cierreToString}}</td>
+                        <td>{{incident.estadoToString}}</td>
+                        <td>
+                            <form method="POST" action="/incidentes/{{incident.id}}/cerrar/{{comunidad.comunidadId}}">
+                                <button type="submit" class="btn botonppal mb-1">Cerrar</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
