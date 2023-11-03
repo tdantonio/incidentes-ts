@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne,
-         JoinColumn, OneToMany, ManyToMany, JoinTable } from "typeorm"
+         JoinColumn, OneToMany, ManyToMany, JoinTable, OneToOne } from "typeorm"
+import { Usuario } from "./Usuario";
 
 @Entity({name: "servicio"})
 export class Servicio {
@@ -24,6 +25,8 @@ export class Entidad {
   
 }
 
+
+
 @Entity({name: "establecimiento"})
 export class Establecimiento {
     @PrimaryGeneratedColumn()
@@ -41,6 +44,8 @@ export class Establecimiento {
     entidad: Entidad;
 }
 
+
+
 export class PrestacionDeServicio {
     // TODO Ver por que los nombres de estas columnas en la tabla de incidentes son por ejemplo
     // prestacionDeServicioEntidad_id, en vez de entidad_id
@@ -57,6 +62,8 @@ export class PrestacionDeServicio {
     @JoinColumn({ name: "servicio_id", referencedColumnName: "id" })
     servicio: Servicio;
 }
+
+
 
 @Entity({name: "incidente"})
 export class Incidente {
@@ -81,6 +88,14 @@ export class Incidente {
 
     @Column(() => PrestacionDeServicio)
     prestacionDeServicio: PrestacionDeServicio;
+
+    @OneToOne(() => Usuario, { cascade: true })
+    @JoinColumn({ name: "usuarioApertura_id" })
+    usuarioApertura: Usuario;
+  
+    @OneToOne(() => Usuario, { cascade: true, nullable: true})
+    @JoinColumn({ name: "usuarioCierre_id" })
+    usuarioCierre: Usuario | null;
 
     //TODO modelar los usuarios de apertura/cierre
 

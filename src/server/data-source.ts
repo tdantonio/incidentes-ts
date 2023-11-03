@@ -9,14 +9,10 @@ export const myDataSource = new DataSource({
     password: "HGwbCa6qmJNjkN7JdC4dcWqZtrIiTUDJ",
     database: "deploydb_jx33",
     synchronize: true,
-    logging: false,
-    entities: ["build/entity/*.js"],
+    logging: true,
+    entities: ["build/model/*.js"],
     ssl: {
-        // Configura la ruta del certificado SSL si es necesario
-
-        // Habilita la compatibilidad con TLS 1.2
         minVersion: "TLSv1.2",
-        // Configura las suites de cifrado compatibles
         ciphers: "TLS_AES_128_GCM_SHA256",
     },
     migrations: [],

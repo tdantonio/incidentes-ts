@@ -1,5 +1,5 @@
 import { myDataSource } from "./data-source"
-import { Entidad, Establecimiento, Incidente, PrestacionDeServicio, Servicio } from "./entity/Incidente"
+import { Entidad, Establecimiento, Incidente, PrestacionDeServicio, Servicio } from "../model/Incidente"
 import express, { Request, Response } from 'express';
 import {Liquid} from 'liquidjs';
 
@@ -11,37 +11,6 @@ myDataSource
     .catch((err) => {
         console.error("Error during Data Source initialization:", err)
     })
-
-//Guardar en base de datos
-//await AppDataSource.manager.save(user)
-
-//traer de base de datos
-//const users = await AppDataSource.manager.find(User)
-
-//init (podriamos moverlo a otro archivo)
-const banio = new Servicio
-banio.nombre = "Baño"
-
-const utn = new Entidad
-utn.nombre = "UTN"
-utn.localizacion = "Argentina"
-
-const medrano = new Establecimiento
-medrano.nombre = "Medrano"
-medrano.servicios = [banio]
-medrano.entidad = utn
-
-const prestacionDeServicio: PrestacionDeServicio = new PrestacionDeServicio
-prestacionDeServicio.entidad = utn
-prestacionDeServicio.establecimiento = medrano
-prestacionDeServicio.servicio = banio
-
-const incidente: Incidente = new Incidente
-incidente.titulo = "test"
-incidente.descripcion = "test"
-incidente.fechaHoraApertura = new Date
-incidente.estado = false
-incidente.prestacionDeServicio = prestacionDeServicio
 
 // Config Express
 const app = express();
@@ -64,12 +33,9 @@ app.get('/incidentes', async function (req: Request, res: Response) {
     // se podria hacer una funcion nombreEntidad() en incidente que haga this.entidad.nombre o algo asi (no se como funca en este lenguaje)
 });
 app.post('/incidentes', async (req: Request, res: Response) => {
-    const incidente_post = await myDataSource.getRepository(Incidente).create(req.body) //creo que aca lo crea a partir de un json
+    const incidente_post = myDataSource.getRepository(Incidente).create(req.body) //creo que aca lo crea a partir de un json
+    //creo que aca lo crea a partir de un json
     await myDataSource.manager.save(incidente_post);
-    res.redirect('/incidentes');
-})
-app.post('/incidente_test', async (req: Request, res: Response) => {
-    await myDataSource.manager.save(incidente)
     res.redirect('/incidentes');
 })
 
