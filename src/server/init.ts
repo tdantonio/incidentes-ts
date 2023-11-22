@@ -68,15 +68,18 @@ incidente_prueba.estado = false
 incidente_prueba.prestacionDeServicio = prestacionDeServicio
 incidente_prueba.usuarioApertura = usuario
 
+bosterosDesdeLaCuna.incidentes = []
+bosterosDesdeLaCuna.miembros = []
+
+bosterosDesdeLaCuna.agregarIncidentes(incidente_prueba)
+bosterosDesdeLaCuna.agregarMiembros(tomyBostero)
+
 
 async function init() {
     //Guardar en base de datos
     //await AppDataSource.manager.save(user)
     await myDataSource.manager.save(usuario)
     await myDataSource.manager.save(bosterosDesdeLaCuna)
-    await myDataSource.manager.save(tomyBostero)
-
-    await myDataSource.manager.save(incidente_prueba)
 }
 
 myDataSource

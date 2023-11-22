@@ -4,7 +4,6 @@
     <h1>Incidentes</h1>
     <a class="btn botonppal mb-auto" href="/incidentes/crear">Abrir Incidente</a>
     <ul class="list-group mt-3" id="incidentList">
-        <h2>Incidentes</h2>
         <ul class="list-group mt-3" id="incidentList">
             {% for comunidad in comunidades %}
             <h2>Incidentes en {{comunidad.nombre}}</h2>
@@ -27,12 +26,24 @@
                     <tr>
                         <td>{{incidente.titulo}}</td>
                         <td>{{incidente.descripcion}}</td>
-                        <td>{{incidente.prestacionDeServicio.getEntidad.getNombre}}</td>
-                        <td>{{incidente.prestacionDeServicio.getEstablecimiento.getNombre}}</td>
-                        <td>{{incidente.prestacionDeServicio.getServicio.getNombre}}</td>
-                        <td>{{incidente.aperturaToString}}</td>
-                        <td>{{incidente.cierreToString}}</td>
-                        <td>{{incidente.estadoToString}}</td>
+                        <td>{{incidente.prestacionDeServicio.entidad.nombre}}</td>
+                        <td>{{incidente.prestacionDeServicio.establecimiento.nombre}}</td>
+                        <td>{{incidente.prestacionDeServicio.servicio.nombre}}</td>
+                        <td>{{ incidente.usuarioApertura.nombre }}: {{ incidente.fechaHoraApertura | date: "%Y-%m-%d" }}</td>
+                        <td>
+                            {% if incidente.usuarioCierre and incidente.fechaHoraCierre %}
+                              {{ incidente.usuarioCierre.nombre }}: {{ incidente.fechaHoraCierre | date: "%Y-%m-%d" }}
+                            {% else %}
+                              -
+                            {% endif %}
+                          </td>
+                        <td>
+                            {% if incidente.estado %}
+                                Cerrado
+                            {% else %}
+                                Abierto
+                            {% endif %}
+                        </td>
                         <td>
                             <form method="POST" action="/incidentes/{{this.id}}/cerrar/{{this.comunidadId}}">
                                 <button type="submit" class="btn botonppal mb-1">Cerrar</button>
@@ -42,6 +53,7 @@
                     {% endfor %}
                 </tbody>
             </table>
+            {% endfor %}
         </ul>
 </div>
 {% endblock %}

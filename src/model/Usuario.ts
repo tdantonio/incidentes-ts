@@ -36,53 +36,52 @@ export class GradoDeConfianza {
 
 @Entity({ name: "credencial" })
 export class CredencialDeAcceso {
-@PrimaryGeneratedColumn()
-id: number;
 
-@Column({ name: "nombreUsuario" })
-nombreUsuario: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-@Column({ name: "contrasenia" })
-contrasenia: string;
+  @Column({ name: "nombreusuario" })
+  nombreUsuario: string;
 
-@Column({ name: "fechaUltimoCambio", type: "timestamp" })
-fechaUltimoCambio: Date;
+  @Column({ name: "contrasenia" })
+  contrasenia: string;
+
+  @Column({ name: "fechaultimocambio", type: "timestamp" })
+  fechaUltimoCambio: Date;
 }
 
 
 
 @Entity({ name: "usuario" })
 export class Usuario {
-@PrimaryGeneratedColumn()
-id: number;
 
-@Column({ name: "nombre" })
-nombre: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-@Column({ name: "apellido" })
-apellido: string;
+  @Column({ name: "nombre" })
+  nombre: string;
 
-@OneToOne(() => CredencialDeAcceso, { cascade: true })
-@JoinColumn({ name: "credencialDeAcceso_id" })
-credencialDeAcceso: CredencialDeAcceso;
+  @Column({ name: "apellido" })
+  apellido: string;
 
-@Column({ name: "mail", nullable: true })
-mail: string;
+  @OneToOne(() => CredencialDeAcceso, { cascade: true })
+  @JoinColumn({ name: "credencialdeacceso_id" })
+  credencialDeAcceso: CredencialDeAcceso;
 
-@Column({ name: "telefono", nullable: true })
-telefono: string;
+  @Column({ name: "mail", nullable: true })
+  mail: string;
 
-@OneToMany(() => Miembro, (miembro) => miembro.usuario, { cascade: true })
-miembros: Miembro[];
+  @Column({ name: "telefono", nullable: true })
+  telefono: string;
 
-@Column()
-puntosDeConfianza: number;
+  @Column({ name: "puntosdeconfianza"})
+  puntosDeConfianza: number;
 
-@OneToOne(() => GradoDeConfianza, { cascade: true })
-@JoinColumn({ name: "gradoDeConfianza_id" })
-gradoDeConfianza: GradoDeConfianza;
+  @OneToOne(() => GradoDeConfianza, { cascade: true })
+  @JoinColumn({ name: "grado_confianza_id" })
+  gradoDeConfianza: GradoDeConfianza;
+
 }
-
 
 
 type Rol = "ADMINISTRADOR" | "MIEMBRO";
@@ -91,29 +90,43 @@ type RolTemporal = "AFECTADO" | "OBSERVADOR";
 
 
 
-
 @Entity({ name: "comunidad" })
 export class Comunidad {
-@PrimaryGeneratedColumn()
-id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-@Column()
-nombre: string;
+  @Column()
+  nombre: string;
 
-@ManyToMany(() => Incidente, { cascade: true })
-@JoinTable({
-  name: "comunidad_incidente",
-  joinColumn: {name: "comunidad_id"},
-  inverseJoinColumn: {name: "incidente_id"}
-})
-incidentes: Incidente[];
+  @ManyToMany(() => Incidente, { cascade: true, eager: true })
+  @JoinTable({
+    name: "comunidad_incidente",
+    joinColumn: {name: "comunidad_id"},
+    inverseJoinColumn: {name: "incidentes_id"}
+  })
+  incidentes: Incidente[] ;
 
-@Column()
-puntosDeConfianza: number;
+  @Column({name: "puntosdeconfianza"})
+  puntosDeConfianza: number;
 
-@OneToOne(() => GradoDeConfianza, { cascade: true })
-@JoinColumn({ name: "gradoDeConfianza_id" })
-gradoDeConfianza: GradoDeConfianza;
+  @OneToOne(() => GradoDeConfianza, { cascade: true })
+  @JoinColumn({ name: "grado_confianza_id" })
+  gradoDeConfianza: GradoDeConfianza;
+
+  @OneToMany(() => Miembro, (miembro) => miembro.comunidad, { cascade: true })
+  miembros: Miembro[] ;
+
+  agregarIncidete(incidente: Incidente): void {
+      this.incidentes.push(incidente)
+  }
+  
+  public agregarMiembros(...miembros: Miembro[]): void {
+    this.miembros.push(...miembros);
+  }
+
+  public agregarIncidentes(...incidentes: Incidente[]): void {
+    this.incidentes.push(...incidentes);
+  }
 }
 
 
@@ -146,6 +159,7 @@ rol: Rol;
     to: (value: RolTemporal) => value,
     from: (value: string) => value as RolTemporal,
   },
+  name: "roltemporal"
 })
 rolTemporal: RolTemporal;
 

@@ -39,7 +39,7 @@ export class Establecimiento {
     @JoinTable({
         name: "establecimiento_servicio",
         joinColumn: { name: "establecimiento_id" },
-        inverseJoinColumn: { name: "servicio_id" },
+        inverseJoinColumn: { name: "servicios_id" },
     })
     servicios: Servicio[];
 
@@ -79,10 +79,10 @@ export class Incidente {
     @Column()
     titulo: string
 
-    @Column( {type: "timestamp"})
+    @Column( {name: "fechahoraapertura",type: "timestamp"})
     fechaHoraApertura: Date
 
-    @Column( {type: "timestamp", nullable: true})
+    @Column( {name: "fechahoracierre", type: "timestamp", nullable: true})
     fechaHoraCierre: Date
 
     @Column({ type: "text" , nullable: true})
@@ -96,19 +96,45 @@ export class Incidente {
     prestacionDeServicio: PrestacionDeServicio;
 
     @OneToOne(() => Usuario, { cascade: true })
-    @JoinColumn({ name: "usuarioApertura_id" })
+    @JoinColumn({ name: "usuarioapertura_id" })
     usuarioApertura: Usuario;
   
     @OneToOne(() => Usuario, { cascade: true, nullable: true})
-    @JoinColumn({ name: "usuarioCierre_id" })
+    @JoinColumn({ name: "usuariocierre_id" })
     usuarioCierre: Usuario | null;
 
     //TODO modelar los usuarios de apertura/cierre
 
 
-/*  aperturaToString(): String {
-        return `${this.usuarioApertura.getNombre()}: ${this.fechaHoraApertura.toISOString().split('T')[0]}`;
-    }*/
+    public nombreEntidad(): String {
+        return this.prestacionDeServicio.entidad.nombre
+    }
+
+    public nombreEstablecimiento(): String {
+        return this.prestacionDeServicio.establecimiento.nombre
+    }
+
+    public nombreServicio(): String {
+        return this.prestacionDeServicio.servicio.nombre
+    }
+
+    public aperturaToString(): String {
+        return `${this.usuarioApertura.nombre}: ${this.fechaHoraApertura.toISOString().split('T')[0]}`;
+    }
+
+    public estadoToString(): String {
+        if(this.estado){
+            return "Cerrado";
+        }
+        return "Abierto";
+    }
+
+    public cierreToString(): String {
+        if( this.usuarioCierre == null || this.fechaHoraCierre == null){
+            return " - ";
+        }
+        return this.usuarioCierre.nombre + ": " + this.fechaHoraCierre.toISOString().split('T')[0];
+    }
 }
 
 
