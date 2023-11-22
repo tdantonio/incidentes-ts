@@ -101,7 +101,11 @@ id: number;
 nombre: string;
 
 @ManyToMany(() => Incidente, { cascade: true })
-@JoinTable({name: "comunidad_incidente"})
+@JoinTable({
+  name: "comunidad_incidente",
+  joinColumn: {name: "comunidad_id"},
+  inverseJoinColumn: {name: "incidente_id"}
+})
 incidentes: Incidente[];
 
 @Column()
@@ -126,28 +130,28 @@ id: number;
 usuario: Usuario;
 
 @Column({
-    type: "enum",
-    enum: ["ADMINISTRADOR", "MIEMBRO"],
-    transformer: {
-      to: (value: Rol) => value,
-      from: (value: string) => value as Rol,
-    },
-  })
-  rol: Rol;
+  type: "enum",
+  enum: ["ADMINISTRADOR", "MIEMBRO"],
+  transformer: {
+    to: (value: Rol) => value,
+    from: (value: string) => value as Rol,
+  },
+})
+rol: Rol;
 
-  @Column({
-    type: "enum",
-    enum: ["AFECTADO", "OBSERVADOR"],
-    transformer: {
-      to: (value: RolTemporal) => value,
-      from: (value: string) => value as RolTemporal,
-    },
-  })
-  rolTemporal: RolTemporal;
+@Column({
+  type: "enum",
+  enum: ["AFECTADO", "OBSERVADOR"],
+  transformer: {
+    to: (value: RolTemporal) => value,
+    from: (value: string) => value as RolTemporal,
+  },
+})
+rolTemporal: RolTemporal;
 
-  @ManyToOne(() => Comunidad)
-  @JoinColumn({ name: "comunidad_id" })
-  comunidad: Comunidad;
+@ManyToOne(() => Comunidad)
+@JoinColumn({ name: "comunidad_id" })
+comunidad: Comunidad;
 }
 
   

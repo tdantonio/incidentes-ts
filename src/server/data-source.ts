@@ -3,11 +3,11 @@ import { DataSource } from "typeorm"
 
 export const myDataSource = new DataSource({
     type: "postgres",
-    host: "dpg-ckve5vramefc73ftt8pg-a.oregon-postgres.render.com",
+    host: "dpg-clevdgsp3ifc73elp3qg-a.ohio-postgres.render.com",
     port: 5432,
     username: "root",
-    password: "HGwbCa6qmJNjkN7JdC4dcWqZtrIiTUDJ",
-    database: "deploydb_jx33",
+    password: "XSIj2WIU11F9PGw6MsJGB6ABJTYD306D",
+    database: "test_8j2p",
     synchronize: true,
     logging: true,
     entities: ["build/model/*.js"],

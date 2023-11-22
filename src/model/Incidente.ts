@@ -36,7 +36,11 @@ export class Establecimiento {
     nombre: string;
 
     @ManyToMany(() => Servicio, { cascade: true })
-    @JoinTable({name: "establecimiento_servicio"})
+    @JoinTable({
+        name: "establecimiento_servicio",
+        joinColumn: { name: "establecimiento_id" },
+        inverseJoinColumn: { name: "servicio_id" },
+    })
     servicios: Servicio[];
 
     @ManyToOne(() => Entidad)
@@ -45,10 +49,11 @@ export class Establecimiento {
 }
 
 
-
+@Entity({name: "prestacion"})
 export class PrestacionDeServicio {
-    // TODO Ver por que los nombres de estas columnas en la tabla de incidentes son por ejemplo
-    // prestacionDeServicioEntidad_id, en vez de entidad_id
+    
+    @PrimaryGeneratedColumn()
+    id: number
 
     @ManyToOne(() => Entidad, {cascade: true})
     @JoinColumn({ name: "entidad_id", referencedColumnName: "id"})
@@ -86,7 +91,8 @@ export class Incidente {
     @Column({ type: "boolean"})
     estado: boolean;
 
-    @Column(() => PrestacionDeServicio)
+    @ManyToOne(() => PrestacionDeServicio, {cascade: true})
+    @JoinColumn({ name: "prestacion_id", referencedColumnName: "id"})
     prestacionDeServicio: PrestacionDeServicio;
 
     @OneToOne(() => Usuario, { cascade: true })
