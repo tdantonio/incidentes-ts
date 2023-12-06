@@ -27,7 +27,7 @@ app.set('view engine', 'liquid');
 app.get('/', (req: Request, res: Response) => {
     res.render('index');
 });
-app.get('/incidentes/:id', incidentesController);
+app.get('/usuarios/:id/incidentes', incidentesController);
 
 app.listen(port, () => {
     console.log(`Servidor Express en ejecución en http://localhost:${port}`);

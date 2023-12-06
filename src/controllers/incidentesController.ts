@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { myDataSource } from '../server/data-source';
-import { Comunidad, Usuario } from '../model/Usuario';
+import { Comunidad } from '../model/Comunidad';
 
 export const incidentesController = async (req: Request, res: Response) => {
   const usuario_id = parseInt(req.params.id, 10);
@@ -11,17 +11,17 @@ export const incidentesController = async (req: Request, res: Response) => {
     const comunidades = await comunidadesRepository
         .createQueryBuilder('c')
         .innerJoinAndSelect('c.miembros', 'm')
-        .innerJoinAndSelect('c.incidentes', 'i')
-        .innerJoinAndSelect('i.prestacionDeServicio', 'p')
-        .innerJoinAndSelect('p.entidad', 'en')
-        .innerJoinAndSelect('p.establecimiento', 'es')
-        .innerJoinAndSelect('p.servicio', 's')
+        .leftJoinAndSelect('c.incidentes', 'i')
+        .leftJoinAndSelect('i.prestacionDeServicio', 'p')
+        .leftJoinAndSelect('p.entidad', 'en')
+        .leftJoinAndSelect('p.establecimiento', 'es')
+        .leftJoinAndSelect('p.servicio', 's')
         .leftJoinAndSelect('i.usuarioApertura', 'u1')
         .leftJoinAndSelect('i.usuarioCierre', 'u2')
         .where('m.usuario.id = :usuario_id', { usuario_id })
         .getMany();
 
-    if (!comunidades) {
+    if (comunidades.length == 0) {
       return res.status(404).send('El usuario ingresado no pertenece a ninguna comunidad');
     }
 

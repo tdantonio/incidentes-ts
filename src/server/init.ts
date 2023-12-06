@@ -1,6 +1,14 @@
 import { myDataSource } from "./data-source"
-import { Entidad, Establecimiento, Incidente, PrestacionDeServicio, Servicio } from "../model/Incidente"
-import { Comunidad, CredencialDeAcceso, GradoDeConfianza, Miembro, Usuario } from "../model/Usuario"
+import { Comunidad } from "../model/Comunidad"
+import { CredencialDeAcceso } from "../model/CredencialDeAcceso"
+import { GradoDeConfianza } from "../model/GradoDeConfianza"
+import { Miembro } from "../model/Miembro"
+import { Usuario } from "../model/Usuario"
+import { Entidad } from "../model/Entidad"
+import { Establecimiento } from "../model/Establecimiento"
+import { Incidente } from "../model/Incidente"
+import { PrestacionDeServicio } from "../model/PrestacionDeServicio"
+import { Servicio } from "../model/Servicio"
 
 const confianzaNoConfiable = new GradoDeConfianza
 confianzaNoConfiable.nombreGradoConfianza = "NO_CONFIABLE"

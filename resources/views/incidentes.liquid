@@ -7,53 +7,69 @@
         <ul class="list-group mt-3" id="incidentList">
             {% for comunidad in comunidades %}
             <h2>Incidentes en {{comunidad.nombre}}</h2>
-            <table class="table table-striped mb-5">
-                <thead>
-                    <tr>
-                        <th class="col-md-1"><strong>Título</strong></th>
-                        <th class="col-md-3"><strong>Descripción</strong></th>
-                        <th class="col-md-2"><strong>Entidad</strong></th>
-                        <th class="col-md-1"><strong>Establecimiento</strong></th>
-                        <th class="col-md-1"><strong>Servicio</strong></th>
-                        <th class="col-md-2"><strong>Apertura</strong></th>
-                        <th class="col-md-2"><strong>Cierre</strong></th>
-                        <th class="col-md-1"><strong>Estado</strong></th>
-                        <th class="col-md-2"><strong></strong></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for incidente in comunidad.incidentes %}
-                    <tr>
-                        <td>{{incidente.titulo}}</td>
-                        <td>{{incidente.descripcion}}</td>
-                        <td>{{incidente.prestacionDeServicio.entidad.nombre}}</td>
-                        <td>{{incidente.prestacionDeServicio.establecimiento.nombre}}</td>
-                        <td>{{incidente.prestacionDeServicio.servicio.nombre}}</td>
-                        <td>{{ incidente.usuarioApertura.nombre }}: {{ incidente.fechaHoraApertura | date: "%Y-%m-%d" }}</td>
-                        <td>
-                            {% if incidente.usuarioCierre and incidente.fechaHoraCierre %}
-                              {{ incidente.usuarioCierre.nombre }}: {{ incidente.fechaHoraCierre | date: "%Y-%m-%d" }}
-                            {% else %}
-                              -
-                            {% endif %}
-                          </td>
-                        <td>
-                            {% if incidente.estado %}
-                                Cerrado
-                            {% else %}
-                                Abierto
-                            {% endif %}
-                        </td>
-                        <td>
-                            <form method="POST" action="/incidentes/{{this.id}}/cerrar/{{this.comunidadId}}">
-                                <button type="submit" class="btn botonppal mb-1">Cerrar</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                {% if comunidad.incidentes.length == 0 %}
+                <table class="table table-striped mb-5">
+                    <thead>
+                        <tr>
+                            <th class="col-md-1"><strong>No hay incidentes actualmente.</strong></th>
+                        </tr>
+                    </thead>
+                </table>
+                {% else %}
+                    <table class="table table-striped mb-5">
+                        <thead>
+                            <tr>
+                                <th class="col-md-1"><strong>Título</strong></th>
+                                <th class="col-md-3"><strong>Descripción</strong></th>
+                                <th class="col-md-2"><strong>Entidad</strong></th>
+                                <th class="col-md-1"><strong>Establecimiento</strong></th>
+                                <th class="col-md-1"><strong>Servicio</strong></th>
+                                <th class="col-md-2"><strong>Apertura</strong></th>
+                                <th class="col-md-2"><strong>Cierre</strong></th>
+                                <th class="col-md-1"><strong>Estado</strong></th>
+                                <th class="col-md-2"><strong></strong></th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            {% for incidente in comunidad.incidentes %}
+                                <tr>
+                                    <td>{{incidente.titulo}}</td>
+                                    <td>{{incidente.descripcion}}</td>
+                                    <td>{{incidente.prestacionDeServicio.entidad.nombre}}</td>
+                                    <td>{{incidente.prestacionDeServicio.establecimiento.nombre}}</td>
+                                    <td>{{incidente.prestacionDeServicio.servicio.nombre}}</td>
+                                    <td>{{ incidente.usuarioApertura.nombre }}: {{ incidente.fechaHoraApertura | date: "%Y-%m-%d" }}</td>
+                                    <td>
+                                        {% if incidente.usuarioCierre and incidente.fechaHoraCierre %}
+                                        {{ incidente.usuarioCierre.nombre }}: {{ incidente.fechaHoraCierre | date: "%Y-%m-%d" }}
+                                        {% else %}
+                                        -
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if incidente.estado %}
+                                            Cerrado
+                                        {% else %}
+                                            Abierto
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if incidente.estado %}
+                                            
+                                        {% else %}
+                                            <form method="POST" action="/incidentes/{{this.id}}/cerrar/{{this.comunidadId}}">
+                                                <button type="submit" class="btn botonppal mb-1">Cerrar</button>
+                                            </form>
+                                        {% endif %}
+                                        
+                                    </td>
+                                </tr>
+                            {% endfor %}                    
+                        </tbody>
+                    </table>
+                {% endif %}
             {% endfor %}
         </ul>
+    </ul>
 </div>
 {% endblock %}
